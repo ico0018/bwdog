@@ -3,6 +3,8 @@ import logo from "../../assets/happycow.png";
 import wallet from "../../assets/wallet.png";
 import checked from "../../assets/checked.png";
 import { Button, Image } from "antd-mobile";
+import ConnectWallet from "./ConnectWallet.jsx";
+import { useRef } from "react";
 
 function MiniButton() {
   return (
@@ -15,11 +17,17 @@ function MiniButton() {
 }
 
 export default function Index() {
+  const connectWalletRef = useRef(null);
+
+  function openConnectWallet() {
+    if (connectWalletRef.current) connectWalletRef.current.open();
+  }
+
   return (
     <div className="bg-black h-[100vh] text-white px-4">
       <Navigator></Navigator>
       <div className="body flex flex-col items-center">
-        <Button className="!mt-6">
+        <Button className="!mt-6" onClick={openConnectWallet}>
           <div className="flex items-center">
             <Image className="mr-1" src={wallet} width={20} height={20} />
             Connect wallet
@@ -64,6 +72,8 @@ export default function Index() {
           </div>
         </div>
       </div>
+      {/* Popup */}
+      <ConnectWallet ref={connectWalletRef}></ConnectWallet>
     </div>
   );
 }
