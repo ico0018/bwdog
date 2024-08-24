@@ -4,6 +4,7 @@ import qrcode from "../../assets/qrcode.png";
 import closeIcon from "../../assets/close.png";
 import wallet_w from "../../assets/wallet_w.png";
 import tg from "../../assets/Telegram_logo.svg";
+import ask from "../../assets/ask.png";
 const ConnectWallet = React.forwardRef((props, ref) => {
   const [visible, setVisible] = useState(true);
 
@@ -55,6 +56,16 @@ const ConnectWallet = React.forwardRef((props, ref) => {
             <span className="text-lg font-bold">Open Wallet in Telegram</span>
             <Image src={tg} width={30} height={30} />
           </div>
+          {/* TODO: Wallets List */}
+        </div>
+      </div>
+      <div className="flex justify-between text-sm px-6 absolute bottom-0 p-5 w-full">
+        <div className="flex items-center">
+          <Image className="mr-4" src={tg} width={35} height={35} />
+          <p className="text-white text-xl">TON Connect</p>
+        </div>
+        <div className="rounded-full bg-gray-700 flex items-center justify-center w-[30px] h-[30px]">
+          <Image src={ask} width={20} height={20} />
         </div>
       </div>
     </Popup>
