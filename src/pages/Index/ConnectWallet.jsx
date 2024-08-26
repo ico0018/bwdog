@@ -1,4 +1,4 @@
-import { Button, Popup, Image } from "antd-mobile";
+import { Popup, Image } from "antd-mobile";
 import React, { useState, useImperativeHandle } from "react";
 import qrcode from "../../assets/qrcode.png";
 import closeIcon from "../../assets/close.png";
@@ -71,5 +71,7 @@ const ConnectWallet = React.forwardRef((props, ref) => {
     </Popup>
   );
 });
+
+ConnectWallet.displayName = "ConnectWallet";
 
 export default ConnectWallet;

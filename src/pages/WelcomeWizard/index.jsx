@@ -6,6 +6,7 @@ import demon4 from "../../assets/demon_laser.svg";
 import demon5 from "../../assets/demon_thinta.svg";
 import { Image, Button } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 function Steps(props) {
   const steps = [];

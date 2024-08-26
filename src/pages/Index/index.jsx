@@ -1,3 +1,4 @@
+import React from "react";
 import Navigator from "../../components/Navigator.tsx";
 import logo from "../../assets/happycow.png";
 import wallet from "../../assets/wallet.png";
