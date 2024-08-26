@@ -4,12 +4,10 @@ import logo from "../../assets/happycow.png";
 import wallet from "../../assets/wallet.png";
 import checked from "../../assets/checked.png";
 import { Button, Image } from "antd-mobile";
-import {connect} from "../../core/wallet/tonconnectUI"
-import {miniapp_init} from "../../core/tg/index"
-
+import { connect } from "../../core/wallet/tonconnectUI";
+import { miniapp_init } from "../../core/tg/index";
 
 function MiniButton() {
-
   return (
     <>
       <div className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75">
@@ -20,7 +18,7 @@ function MiniButton() {
 }
 
 export default function Index() {
-  miniapp_init()
+  miniapp_init();
   return (
     <div className="bg-black h-[100vh] text-white px-4">
       <Navigator></Navigator>
@@ -71,7 +69,7 @@ export default function Index() {
         </div>
       </div>
       {/* Popup */}
-      <ConnectWallet ref={connectWalletRef}></ConnectWallet>
+      {/* <ConnectWallet ref={connectWalletRef}></ConnectWallet> */}
     </div>
   );
 }
