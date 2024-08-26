@@ -70,7 +70,7 @@ importers:
         version: 2.1.4
     devDependencies:
       eslint:
-        specifier: '8'
+        specifier: ^8.57.0
         version: 8.57.0
 
 packages:
