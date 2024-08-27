@@ -7,8 +7,6 @@ import LeaderboardRoundedIcon from "@mui/icons-material/LeaderboardRounded";
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 
 export default () => {
-  const [activeKey, setActiveKey] = useState("Home");
-
   const tabs = [
     {
       key: "Home",
