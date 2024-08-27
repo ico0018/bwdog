@@ -3,18 +3,16 @@ import { Route, Routes } from "react-router-dom";
 
 import Index from "./pages/Index";
 import Welcome from "./pages/WelcomeWizard";
-import Cowtabbar from "./components/CowTabbar";
+import withTabbar from "./components/withTabbar";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" Component={Index}></Route>
+        <Route path="/" Component={withTabbar(Index)}></Route>
         <Route path="/welcome" Component={Welcome}></Route>
         <Route path="*" element={<h1>Not Found</h1>}></Route>
       </Routes>
-      <div className="SafeArea h-[72px] bg-black"></div>
-      <Cowtabbar />
     </>
   );
 }

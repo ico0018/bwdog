@@ -6,6 +6,7 @@ import checked from "../../assets/checked.png";
 import { Button, Image } from "antd-mobile";
 import { connect } from "../../core/wallet/tonconnectUI";
 import { miniapp_init } from "../../core/tg/index";
+import { useNavigate } from "react-router-dom";
 
 function MiniButton() {
   return (
@@ -19,6 +20,13 @@ function MiniButton() {
 
 export default function Index() {
   miniapp_init();
+
+  const router = useNavigate();
+
+  function toWelcome() {
+    router("/welcome");
+  }
+
   return (
     <div className="bg-black h-[100vh] text-white px-4">
       <Navigator></Navigator>
@@ -30,7 +38,13 @@ export default function Index() {
           </div>
         </Button>
 
-        <Image className="mr-1 mt-5" src={logo} width={150} height={150} />
+        <Image
+          onClick={toWelcome}
+          className="mr-1 mt-5"
+          src={logo}
+          width={150}
+          height={150}
+        />
 
         <h1 className="text-4xl mt-5">838</h1>
         <h2 className="text-xl text-gray-300 font-medium">COWS</h2>
