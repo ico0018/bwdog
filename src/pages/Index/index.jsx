@@ -1,5 +1,5 @@
 import React from "react";
-import Navigator from "../../components/Navigator.tsx";
+import Navigator from "../../components/Navigator";
 import logo from "../../assets/happycow.png";
 import wallet from "../../assets/wallet.png";
 import checked from "../../assets/checked.png";
@@ -68,8 +68,6 @@ export default function Index() {
           </div>
         </div>
       </div>
-      {/* Popup */}
-      {/* <ConnectWallet ref={connectWalletRef}></ConnectWallet> */}
     </div>
   );
 }
