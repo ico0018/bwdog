@@ -13,8 +13,23 @@ const goodsSlice = createSlice({
   },
 });
 
+const tabSlice = createSlice({
+  name: "tabSlice",
+  initialState: {
+    tabIndex: 0,
+  },
+  reducers: {
+    setTabIndex(state, action) {
+      state.tabIndex = action.payload;
+    },
+  },
+});
+
+export const { setTabIndex } = tabSlice.actions;
+
 export default configureStore({
   reducer: {
     goods: goodsSlice.reducer,
+    tab: tabSlice.reducer,
   },
 });

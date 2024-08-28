@@ -1,6 +1,6 @@
 import React from "react";
 import Navigator from "../../components/Navigator";
-import logo from "../../assets/happycow.png";
+import logo from "../../assets/cow.svg";
 import wallet from "../../assets/wallet.png";
 import checked from "../../assets/checked.png";
 import { Button, Image } from "antd-mobile";
@@ -28,7 +28,7 @@ export default function Index() {
   }
 
   return (
-    <div className="bg-black h-[100vh] text-white px-4">
+    <div className="bg-black  text-white px-4">
       <Navigator></Navigator>
       <div className="body flex flex-col items-center">
         <Button className="!mt-6" onClick={connect}>

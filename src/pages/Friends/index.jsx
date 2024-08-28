@@ -1,7 +1,9 @@
 export default function Friends() {
   return (
     <>
-      <h1>Friends</h1>
+      <div className="h-full bg-black">
+        <h1>Friends</h1>
+      </div>
     </>
   );
 }

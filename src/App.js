@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import withTabbar from "./components/withTabbar";
 
+import withTabbar from "./components/withTabbar";
 import Index from "./pages/Index";
 import Leaderboard from "./pages/Leaderboard";
 import Friends from "./pages/Friends";
