@@ -1,31 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Navigator from "../../components/Navigator";
 import logo from "../../assets/cow.svg";
 import wallet from "../../assets/wallet.png";
 import checked from "../../assets/checked.png";
-import { Button, Image } from "antd-mobile";
+import { Button, Image, Popup } from "antd-mobile";
 import { connect } from "../../core/wallet/tonconnectUI";
 import { miniapp_init } from "../../core/tg/index";
 import { useNavigate } from "react-router-dom";
-
-function MiniButton() {
-  return (
-    <>
-      <div className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75">
-        Share
-      </div>
-    </>
-  );
-}
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function Index() {
   miniapp_init();
+
+  function MiniButton() {
+    return (
+      <>
+        <div
+          onClick={() => {
+            setSharePop(true);
+          }}
+          className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75"
+        >
+          Share
+        </div>
+      </>
+    );
+  }
 
   const router = useNavigate();
 
   function toWelcome() {
     router("/welcome");
   }
+
+  const [sharePop, setSharePop] = useState(true);
 
   return (
     <div className="bg-black min-h-full text-white px-4">
@@ -82,6 +90,50 @@ export default function Index() {
           </div>
         </div>
       </div>
+      <Popup
+        visible={sharePop}
+        onMaskClick={() => {
+          setSharePop(false);
+        }}
+        bodyStyle={{
+          background: "#131313",
+          borderTopLeftRadius: "1rem",
+          borderTopRightRadius: "1rem",
+          minHeight: "40vh",
+        }}
+      >
+        <div className="flex flex-col items-center text-white min-h-[40vh]">
+          <h1 className="flex justify-center items-center relative p-4 text-lg font-medium w-full border-b-[0.5px] border-gray-700">
+            <p>Invite friends</p>
+            <div
+              className="!absolute right-4 bg-[#222222] rounded-full w-8 h-8 flex justify-center items-center"
+              onClick={() => {
+                setSharePop(false);
+              }}
+              shape="rounded"
+            >
+              <CloseIcon
+                sx={{
+                  color: "#535353",
+                }}
+              />
+            </div>
+          </h1>
+
+          <div className="flex flex-col w-full grow justify-between px-4 py-7">
+            <Button className="w-full !rounded-xl">
+              <span className="flex items-center justify-center font-bold text-lg py-1">
+                Copy invite link
+              </span>
+            </Button>
+            <Button className="w-full !rounded-xl">
+              <span className="flex items-center justify-center font-bold text-lg py-1">
+                Share invite link
+              </span>
+            </Button>
+          </div>
+        </div>
+      </Popup>
       <div className="SafeArea h-[56px] bg-black"></div>
     </div>
   );
