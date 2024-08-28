@@ -5,7 +5,6 @@ export default function withTabbar(WrappedComponent) {
     return (
       <div className="h-full">
         <WrappedComponent {...props} />
-        <div className="SafeArea h-[56px] bg-black"></div>
         <CowTabbar />
       </div>
     );

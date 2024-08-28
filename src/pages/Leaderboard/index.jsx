@@ -47,6 +47,7 @@ export default function Leaderboard() {
           </div>
         ))}
       </div>
+      <div className="SafeArea h-[56px] bg-black"></div>
     </div>
   );
 }

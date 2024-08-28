@@ -82,6 +82,7 @@ export default function Index() {
           </div>
         </div>
       </div>
+      <div className="SafeArea h-[56px] bg-black"></div>
     </div>
   );
 }
