@@ -31,31 +31,55 @@ export default function WelcomeWizard() {
   const tipList = useMemo(() => {
     return [
       {
-        title: "Your sticker collection",
+        title: (
+          <>
+            Your sticker <br /> collection
+          </>
+        ),
         desc: "Create your own sticker pack with unique Dogs",
         img: demon1,
         btnTitle: "Wow, what",
       },
       {
-        title: "Catch the rare stickers",
+        title: (
+          <>
+            Catch the <br /> rare stickers
+          </>
+        ),
         desc: "Collect rare stickers in your pack before others do",
         img: demon2,
         btnTitle: "Oh!",
       },
       {
-        title: "Mint and trade your stickers",
+        title: (
+          <>
+            Mint and trade <br /> your stickers
+          </>
+        ),
         desc: "Mint and trade your stickers on the NFT marketplace",
         img: demon3,
         btnTitle: "Yayyy",
       },
       {
-        title: "Earn stickers that no one can buy",
+        title: (
+          <>
+            Earn stickers that <br /> no one can buy
+          </>
+        ),
         desc: "Donate to charities, join activities or just be real OG",
         img: demon4,
         btnTitle: "OMG I WANT IT!",
       },
       {
-        title: "You've got some unique stickers already",
+        title: (
+          <>
+            You've got some
+            <br />
+            unique stickers
+            <br />
+            already
+          </>
+        ),
         desc: "But no rush, the plantform is cooking so be ready to chaim it first",
         img: demon5,
         btnTitle: "Okaaay, will get back",
@@ -76,7 +100,7 @@ export default function WelcomeWizard() {
       <div className="bg-[#1E89D6]  h-full relative pt-8">
         <Steps step={step} />
         <div className="text-white font-bold ">
-          <h1 className=" text-4xl  px-20 text-center pt-8">
+          <h1 className=" text-3xl  px-10 text-center pt-8">
             {tipList[step].title}
           </h1>
 
