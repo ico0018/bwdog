@@ -28,7 +28,7 @@ export default function Index() {
   }
 
   return (
-    <div className="bg-black  text-white px-4">
+    <div className="bg-black min-h-full text-white px-4">
       <Navigator></Navigator>
       <div className="body flex flex-col items-center">
         <Button className="!mt-6" onClick={connect}>
