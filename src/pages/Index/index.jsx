@@ -33,7 +33,7 @@ export default function Index() {
     router("/welcome");
   }
 
-  const [sharePop, setSharePop] = useState(true);
+  const [sharePop, setSharePop] = useState(false);
 
   return (
     <div className="bg-black min-h-full text-white px-4">

@@ -49,7 +49,7 @@ function tryCloseWebappWindows() {
 }
 
 function telegramShare(words, path) {
-  navigator(encodeURI(`https://t.me/share/url?url=${path}&text=${words}`));
+  window.location.href=encodeURI(`https://t.me/share/url?url=${path}&text=${words}`)
 }
 
 function telegramShareApp() {
