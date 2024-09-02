@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Navigator from "../../components/Navigator";
 import logo from "../../assets/cow.svg";
 import wallet from "../../assets/wallet.png";
@@ -9,8 +9,82 @@ import { miniapp_init } from "../../core/tg/index";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 
+import {api_login,api_login_data}from "../../core/request/index"
+import {storage_set_authkey,storage_get_authkey} from "../../core/storage/index"
+
 export default function Index() {
-  miniapp_init();
+
+  const [sharePop, setSharePop] = useState(false);
+
+  const [reqData, setReqData] = useState(
+    {
+      "wallet": {},
+      "credit": {
+          "_id": "",
+          "uid": 0,
+          "credit": 0,
+          "withdraws": 0
+      },
+      "history": {
+          "_id": "",
+          "uid": 0,
+          "action": "signin",
+          "credit": 5000
+      }
+  }
+  );
+
+  const [isInited, setIsInited] = useState(false);
+
+  useEffect(()=>{
+    console.log("useEffect")
+    telegramWebappInit()
+    console.log("isInited",isInited)
+    
+    }, [])
+
+  function telegramWebappInit() {
+    if(isInited)
+    {
+      console.log("Looping again . find reason plz . ")
+      return false
+    }else
+    {
+      setIsInited(true)
+    }
+
+    let autKey = storage_get_authkey()
+    if(autKey && autKey.length>10)
+    {
+      console.log('🔥autKey exsit',autKey);
+      api_login_data().then((auth) => {
+          console.log('🔥',auth);
+          setReqData(auth.data)
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }else{
+      const initData = miniapp_init()
+      console.log("🔥initData", initData);
+      api_login({
+        initData : (initData.initData.initData.split("&tgWebAppVersion"))[0]||"",
+        invite : initData.starData
+      }).then((auth) => {
+        if(auth.code != 200 || !auth.data)
+        {
+          storage_set_authkey("")
+          return telegramWebappInit()
+        }
+          console.log('🔥',auth);
+          setReqData(auth.data)
+          storage_set_authkey(auth.token)
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  }
 
   function MiniButton() {
     return (
@@ -33,8 +107,6 @@ export default function Index() {
     router("/welcome");
   }
 
-  const [sharePop, setSharePop] = useState(false);
-
   return (
     <div className="bg-black min-h-full text-white px-4">
       <Navigator></Navigator>
@@ -54,7 +126,7 @@ export default function Index() {
           height={150}
         />
 
-        <h1 className="text-4xl mt-5">838</h1>
+        <h1 className="text-4xl mt-5">{reqData.credit.credit || "838"}</h1>
         <h2 className="text-xl text-gray-300 font-medium">COWS</h2>
 
         {/* TODO:Cards Component */}

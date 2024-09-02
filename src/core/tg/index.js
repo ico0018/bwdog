@@ -1,5 +1,7 @@
 import { initMiniApp } from "@telegram-apps/sdk-react";
 
+import {storage_set_raw_init_data} from "../storage/index"
+
 function miniapp_init() {
   let decodeData = {
     isTelegram: false,
@@ -36,6 +38,7 @@ function miniapp_init() {
   } catch (e) {
     console.log(e);
   }
+  storage_set_raw_init_data(decodeData)
   return decodeData;
 }
 

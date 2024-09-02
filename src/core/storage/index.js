@@ -4,8 +4,8 @@
  * Control cookies * local storage
  */
 const router_storage = {
-  authkey: "user_authkey",
-  uid: "user_uid",
+  authkey: "",
+  uid: "",
   user_data_tg: "user_data_telegram",
   raw_init_data: {
     isTelegram: false,
@@ -33,7 +33,7 @@ function storage_get_raw_init_data() {
   if (key) {
     return key;
   }
-  return key;
+  return false;
 }
 
 function storage_set_raw_init_data(raw_init_data) {

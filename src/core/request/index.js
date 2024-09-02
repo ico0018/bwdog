@@ -3,12 +3,13 @@
  */
 
 import { storage_get_authkey } from "../storage/index";
-const siteBaseUrl = "http://127.0.0.1";
+const siteBaseUrl = "https://app.tonmeme.xyz/";
 
 const request_baseurl = `${siteBaseUrl}api/`;
 const request_router = {
   ping: request_baseurl + "ping",
   auth: request_baseurl + "auth",
+  login : request_baseurl + "user/login",
 };
 
 async function requester(url, requestOptions) {
@@ -78,4 +79,12 @@ async function api_auth(data) {
   return await requester(request_router.auth, request_post_unauth(data));
 }
 
-export { api_auth, api_ping };
+async function api_login(data) {
+  return await requester(request_router.login, request_post_unauth(data));
+}
+
+async function api_login_data() {
+  return await requester(request_router.login, request_get_auth());
+}
+
+export { api_auth, api_ping ,api_login,api_login_data};
