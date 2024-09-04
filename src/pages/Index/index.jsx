@@ -17,6 +17,28 @@ import {
 } from "../../core/storage/index";
 
 export default function Index() {
+
+  const cardsData = [
+    // {
+    //   title:"Invite your friend !",
+    //   text:"Share to the world",
+    //   button:"Share",
+    //   link:""
+    // },
+    {
+      title:"Join our Channel",
+      text:"Join and see more details",
+      button:"Join",
+      link:"https://t.me/ASOWEIKE"
+    },
+    {
+      title:"Follow our twitter",
+      text:"Follow to earn ! ",
+      button:"Follow",
+      link:"https://x.com/gunmuho1",
+    }
+  ]
+
   const [sharePop, setSharePop] = useState(false);
 
   const [reqData, setReqData] = useState({
@@ -39,7 +61,7 @@ export default function Index() {
 
   useEffect(() => {
     console.log("useEffect");
-    // telegramWebappInit()
+    telegramWebappInit()
     console.log("isInited", isInited);
   }, []);
 
@@ -58,6 +80,7 @@ export default function Index() {
         .then((auth) => {
           console.log("🔥", auth);
           setReqData(auth.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -74,6 +97,7 @@ export default function Index() {
             storage_set_authkey("");
             return telegramWebappInit();
           }
+          setLoading(false);
           console.log("🔥", auth);
           setReqData(auth.data);
           storage_set_authkey(auth.token);
@@ -84,7 +108,7 @@ export default function Index() {
     }
   }
 
-  function MiniButton() {
+  function MiniButton(title) {
     return (
       <>
         <div
@@ -93,7 +117,7 @@ export default function Index() {
           }}
           className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75"
         >
-          Share
+          {title}
         </div>
       </>
     );
@@ -107,9 +131,9 @@ export default function Index() {
 
   // Loading Control
   const [loading, setLoading] = useState(true);
-  setTimeout(() => {
-    setLoading(false);
-  }, 5000);
+  // setTimeout(() => {
+  //   setLoading(false);
+  // }, 5000);
 
   return (
     <>
@@ -148,12 +172,19 @@ export default function Index() {
               "--track-padding": " 0 0 16px",
             }}
           >
-            {[1, 2, 3].map((item, index) => (
+            {cardsData.map((item, index) => (
               <Swiper.Item key={index}>
                 <div className=" mt-5 bg-gray-800 rounded-xl p-5 text-sm w-[98%]">
-                  <p className="text-xl  font-bold">Share your OG Status</p>
-                  <p>In Telegram stories</p>
-                  <MiniButton></MiniButton>
+                  <p className="text-xl  font-bold">{item.title}</p>
+                  <p>{item.text}</p>
+                  <div
+                  onClick={() => {
+                    window.open(item.link)
+                  }}
+                  className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75"
+                >
+                  {item.button}
+                  </div>
                 </div>
               </Swiper.Item>
             ))}
@@ -166,11 +197,18 @@ export default function Index() {
               <div className="flex items-center">
                 <Image className="mr-4" src={checked} width={35} height={35} />
                 <div className="flex flex-col">
-                  <p>Share your story</p>
+                  <p>Join our channel</p>
                   <p className="text-gray-300">+1,000 COWS</p>
                 </div>
               </div>
-              <MiniButton></MiniButton>
+              <div
+                onClick={() => {
+                    window.open("https://t.me/ASOWEIKE")
+                }}
+                className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75"
+              >
+                Join
+              </div>
             </div>
 
             <div className="flex justify-between text-sm  mt-3">
@@ -178,10 +216,17 @@ export default function Index() {
                 <Image className="mr-4" src={checked} width={35} height={35} />
                 <div className="flex flex-col">
                   <p>Follow us on Twitter</p>
-                  <p className="text-gray-300">+50 COWS</p>
+                  <p className="text-gray-300">+1000 COWS</p>
                 </div>
               </div>
-              <MiniButton></MiniButton>
+              <div
+                onClick={() => {
+                  window.open("https://x.com/gunmuho1")
+                }}
+                className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75"
+              >
+                Follow
+              </div>
             </div>
           </div>
         </div>
