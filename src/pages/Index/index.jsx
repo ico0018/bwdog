@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Backdrop, CircularProgress } from "@mui/material";
 
-import { api_login, api_login_data } from "../../core/request/index";
+import { api_login, api_login_data , api_action_update } from "../../core/request/index";
 import {
   storage_set_authkey,
   storage_get_authkey,
@@ -18,26 +18,35 @@ import {
 
 export default function Index() {
 
-  const cardsData = [
-    // {
-    //   title:"Invite your friend !",
-    //   text:"Share to the world",
-    //   button:"Share",
-    //   link:""
-    // },
+
+  /**
+   * Action list
+   * 
+   * twitterFollow
+   * mainTelegramChannelJoin
+   */
+
+  const actionStatus = ['Check','Done'];
+  const [cardsData, setCardsData] = useState(
+    [
     {
       title:"Join our Channel",
       text:"Join and see more details",
       button:"Join",
-      link:"https://t.me/ASOWEIKE"
+      link:"https://t.me/ASOWEIKE",
+      action:"twitterFollow",
+      status:0
     },
     {
       title:"Follow our twitter",
       text:"Follow to earn ! ",
       button:"Follow",
       link:"https://x.com/gunmuho1",
+      action:"mainTelegramChannelJoin",
+      status:0
     }
   ]
+);
 
   const [sharePop, setSharePop] = useState(false);
 
@@ -49,12 +58,8 @@ export default function Index() {
       credit: 0,
       withdraws: 0,
     },
-    history: {
-      _id: "",
-      uid: 0,
-      action: "signin",
-      credit: 5000,
-    },
+    history: [],
+    action:[]
   });
 
   const [isInited, setIsInited] = useState(false);
@@ -65,6 +70,35 @@ export default function Index() {
     console.log("isInited", isInited);
   }, []);
 
+  function afterLogin(auth)
+  {
+    console.log("🔥 afterLogin", auth);
+    setReqData(auth.data);
+    var cardsFinal = JSON.parse(
+      JSON.stringify(cardsData)
+    )
+    auth.data.action.forEach(e => {
+
+      for(let i = 0 ; i < cardsFinal.length ;i++)
+      {
+        if(e.action == cardsFinal[i].action)
+          {
+            cardsFinal[i].status = e.status
+            
+            // if(e.status || e.status==0)
+            // {
+              cardsFinal[i].button = actionStatus[0]
+            // }
+          }
+      }
+     
+      
+    });
+    setCardsData(cardsFinal)
+    setLoading(false);
+    console.log("🔥auth.data",auth.data)
+    console.log("🔥cardsFinal",cardsFinal)
+  }
   function telegramWebappInit() {
     if (isInited) {
       console.log("Looping again . find reason plz . ");
@@ -78,9 +112,7 @@ export default function Index() {
       console.log("🔥autKey exsit", autKey);
       api_login_data()
         .then((auth) => {
-          console.log("🔥", auth);
-          setReqData(auth.data);
-          setLoading(false);
+          afterLogin(auth)
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -93,14 +125,15 @@ export default function Index() {
         invite: initData.starData,
       })
         .then((auth) => {
-          if (auth.code != 200 || !auth.data) {
-            storage_set_authkey("");
-            return telegramWebappInit();
-          }
-          setLoading(false);
-          console.log("🔥", auth);
-          setReqData(auth.data);
+          // if (auth.code != 200 || !auth.data) {
+          //   storage_set_authkey("");
+          //   return telegramWebappInit();
+          // }
+          // setLoading(false);
+          // console.log("🔥", auth);
+          // setReqData(auth.data);
           storage_set_authkey(auth.token);
+          afterLogin(auth)
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -121,6 +154,18 @@ export default function Index() {
         </div>
       </>
     );
+  }
+
+  async function CardButton(index,data)
+  {
+    await api_action_update(
+      {
+        action:cardsData[index].action,
+        status:cardsData[index].status+1,
+        data:""?data:""
+      }
+    )
+    window.open(cardsData[index].link)
   }
 
   const router = useNavigate();
@@ -193,7 +238,30 @@ export default function Index() {
           <div className="w-full text-xl mt-5">
             <h1>Tasks</h1>
 
+
+            {cardsData.map((item, index) => (
             <div className="flex justify-between text-sm  mt-3">
+            <div className="flex items-center">
+              <Image className="mr-4" src={checked} width={35} height={35} />
+              <div className="flex flex-col">
+                <p>{item.title}</p>
+                <p className="text-gray-300">+1,000 COWS</p>
+              </div>
+            </div>
+            <div
+              onClick={async () => {
+                  CardButton(index,"")
+              }}
+              className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75"
+            >
+              {item.button}
+            </div>
+            </div>
+
+            ))}
+
+{/* {
+              <div className="flex justify-between text-sm  mt-3">
               <div className="flex items-center">
                 <Image className="mr-4" src={checked} width={35} height={35} />
                 <div className="flex flex-col">
@@ -228,6 +296,8 @@ export default function Index() {
                 Follow
               </div>
             </div>
+} */}
+
           </div>
         </div>
         <Popup

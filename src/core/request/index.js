@@ -10,6 +10,8 @@ const request_router = {
   ping: request_baseurl + "ping",
   auth: request_baseurl + "auth",
   login : request_baseurl + "user/login",
+  action_update : request_baseurl + "action/update",
+  action_list : request_baseurl + "action/list",
 };
 
 async function requester(url, requestOptions) {
@@ -46,9 +48,9 @@ function auth_header() {
   return myHeaders;
 }
 
-// function request_get_unauth() {
-//     return request_method_get({});
-// }
+function request_get_unauth() {
+    return request_method_get({});
+}
 
 function request_get_auth() {
   return request_method_get(auth_header());
@@ -61,14 +63,14 @@ function request_post_unauth(data) {
   return request_method_post(JSON.stringify(data), h);
 }
 
-// function request_post_auth(data) {
-//     const h = auth_header();
-//     h.append("Content-Type", "application/json");
+function request_post_auth(data) {
+    const h = auth_header();
+    h.append("Content-Type", "application/json");
 
-//     return request_method_post(
-//         JSON.stringify(data), h
-//     );
-// }
+    return request_method_post(
+        JSON.stringify(data), h
+    );
+}
 
 async function api_ping() {
   return await requester(request_router.ping, request_get_auth());
@@ -87,4 +89,11 @@ async function api_login_data() {
   return await requester(request_router.login, request_get_auth());
 }
 
-export { api_auth, api_ping ,api_login,api_login_data};
+async function api_action_update(data) {
+  return await requester(request_router.action_update, request_post_auth(data));
+}
+async function api_action_list() {
+  return await requester(request_router.action_list, request_get_auth());
+}
+
+export { api_auth, api_ping ,api_login,api_login_data,api_action_update,api_action_list};
