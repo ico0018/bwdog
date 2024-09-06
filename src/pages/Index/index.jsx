@@ -66,7 +66,7 @@ export default function Index() {
 
   useEffect(() => {
     console.log("useEffect");
-    // telegramWebappInit()
+    telegramWebappInit();
     console.log("isInited", isInited);
   }, []);
 
@@ -165,9 +165,9 @@ export default function Index() {
 
   // Loading Control
   const [loading, setLoading] = useState(true);
-  setTimeout(() => {
-    setLoading(false);
-  }, 1000);
+  // setTimeout(() => {
+  //   setLoading(false);
+  // }, 1000);
 
   return (
     <>
@@ -236,7 +236,7 @@ export default function Index() {
                   />
                   <div className="flex flex-col">
                     <p>{item.title}</p>
-                    <p className="text-gray-300">+1,000 COWS</p>
+                    <p className="text-gray-300">+1,000 ASO</p>
                   </div>
                 </div>
                 <div
@@ -256,7 +256,7 @@ export default function Index() {
                 <Image className="mr-4" src={checked} width={35} height={35} />
                 <div className="flex flex-col">
                   <p>Join our channel</p>
-                  <p className="text-gray-300">+1,000 COWS</p>
+                  <p className="text-gray-300">+1,000 ASO</p>
                 </div>
               </div>
               <div
@@ -274,7 +274,7 @@ export default function Index() {
                 <Image className="mr-4" src={checked} width={35} height={35} />
                 <div className="flex flex-col">
                   <p>Follow us on Twitter</p>
-                  <p className="text-gray-300">+1000 COWS</p>
+                  <p className="text-gray-300">+1000 ASO</p>
                 </div>
               </div>
               <div
