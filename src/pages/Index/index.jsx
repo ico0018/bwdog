@@ -66,7 +66,7 @@ export default function Index() {
 
   useEffect(() => {
     console.log("useEffect");
-    // telegramWebappInit()
+    telegramWebappInit();
     console.log("isInited", isInited);
   }, []);
 
@@ -165,9 +165,9 @@ export default function Index() {
 
   // Loading Control
   const [loading, setLoading] = useState(true);
-  setTimeout(() => {
-    setLoading(false);
-  }, 1000);
+  // setTimeout(() => {
+  //   setLoading(false);
+  // }, 1000);
 
   return (
     <>
@@ -197,7 +197,7 @@ export default function Index() {
           />
 
           <h1 className="text-4xl mt-5">{reqData.credit.credit || "838"}</h1>
-          <h2 className="text-xl text-gray-300 font-medium">ASO</h2>
+          <h2 className="text-xl text-gray-300 font-medium">COWS</h2>
 
           <Swiper
             style={{
