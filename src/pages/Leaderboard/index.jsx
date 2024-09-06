@@ -15,7 +15,7 @@ export default function Leaderboard() {
           <Image className="mr-4" src={checked} width={40} height={40} />
           <div className="flex flex-col  font-bold">
             <p>jackchanelx</p>
-            <p className="text-gray-300">0 ASO</p>
+            <p className="text-gray-300">0 COWS</p>
           </div>
         </div>
         <div className="flex items-center font-bold">#84578392</div>
@@ -33,7 +33,7 @@ export default function Leaderboard() {
               <Image className="mr-4" src={checked} width={40} height={40} />
               <div className="flex flex-col  font-bold">
                 <p>jackchanelx</p>
-                <p className="text-gray-300">0 ASO</p>
+                <p className="text-gray-300">0 COWS</p>
               </div>
             </div>
             <div className="flex items-center">

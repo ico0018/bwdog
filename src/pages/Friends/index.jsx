@@ -7,7 +7,7 @@ import { telegramShare } from "../../core/tg/index";
 export default function Friends() {
   function shareToFriend() {
     telegramShare(
-      "🍺 Earn your ASO here ! ",
+      "🍺 Earn your COWS here ! ",
       "http://t.me/cowscoin_bot/app?startapp=invite1234"
     );
   }
