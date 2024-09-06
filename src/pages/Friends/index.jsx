@@ -34,7 +34,7 @@ export default function Friends() {
                   Invite friends
                 </span>
               </Button>
-              <Button className="!ml-3">
+              <Button className="!ml-3 !rounded-lg">
                 <div className="flex items-center">
                   <Image src={copy} width={25} height={25} />
                 </div>
