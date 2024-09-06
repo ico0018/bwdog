@@ -18,7 +18,7 @@ export default function Navigator() {
         style={{ width: "100%" }}
       >
         <Image className="mr-2" src={logo} width={35} height={35} fit="cover" />
-        <p>COWS comming &nbsp; &nbsp; &nbsp;</p>
+        <p>ASO comming &nbsp; &nbsp; &nbsp;</p>
         <Button
           className="!rounded-xl"
           style={{ marginRight: "0px" }}

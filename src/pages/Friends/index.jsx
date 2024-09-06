@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Image } from "antd-mobile";
 import logo from "../../assets/cow.svg";
-
+import copy from "../../assets/copy.svg";
 import { telegramShare } from "../../core/tg/index";
 
 export default function Friends() {
@@ -22,14 +22,25 @@ export default function Friends() {
           <h2 className=" font-medium text-2xl text-center mt-16">
             Tap on the button to irinvite your friends
           </h2>
-          <Button
-            className="w-full !absolute bottom-0 !rounded-lg"
-            onClick={shareToFriend}
-          >
-            <span className="flex items-center justify-center font-bold text-lg py-1">
-              Invite friends
-            </span>
-          </Button>
+
+          <div className="w-full !absolute bottom-0">
+            {/* Invited friends */}
+            <p className="text-center text-sm mb-4">
+              Invited friends: <span className="font-bold">0</span>
+            </p>
+            <div className="flex justify-between">
+              <Button className="grow !rounded-lg" onClick={shareToFriend}>
+                <span className="flex items-center justify-center font-bold text-lg py-1">
+                  Invite friends
+                </span>
+              </Button>
+              <Button className="!ml-3">
+                <div className="flex items-center">
+                  <Image src={copy} width={25} height={25} />
+                </div>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </>
