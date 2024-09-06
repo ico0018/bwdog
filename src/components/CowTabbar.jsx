@@ -4,7 +4,7 @@ import LeaderboardRoundedIcon from "@mui/icons-material/LeaderboardRounded";
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { setTabIndex } from "../store";
+import { setTabIndex, setTabIndexByPath } from "../store";
 
 const ReduxConnect = connect((state) => {
   return {
@@ -40,12 +40,11 @@ function CowTabbar(props) {
   ]);
 
   useEffect(() => {
-    setTabIndex(props.tabIndex);
+    props.dispatch(setTabIndexByPath(window.location.pathname));
   }, [props.tabIndex]);
 
   const router = useNavigate();
   function navigateTo(path, tabIndex) {
-    props.dispatch(setTabIndex(tabIndex));
     router(path);
   }
 

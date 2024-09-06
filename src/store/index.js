@@ -22,10 +22,22 @@ const tabSlice = createSlice({
     setTabIndex(state, action) {
       state.tabIndex = action.payload;
     },
+    setTabIndexByPath(state, action) {
+      const path = action.payload;
+      if (path === "/") {
+        state.tabIndex = 0;
+      } else if (path === "/leaderboard") {
+        state.tabIndex = 1;
+      } else if (path === "/friends") {
+        state.tabIndex = 2;
+      } else {
+        state.tabIndex = 0;
+      }
+    },
   },
 });
 
-export const { setTabIndex } = tabSlice.actions;
+export const { setTabIndex, setTabIndexByPath } = tabSlice.actions;
 
 export default configureStore({
   reducer: {
