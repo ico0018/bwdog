@@ -15,7 +15,7 @@ export default function Friends() {
     <>
       <div className="min-h-full bg-black text-white flex flex-col w-full px-4 pt-10">
         <h1 className="text-center text-3xl font-bold">
-          Invite friends <br /> and get more DOGS
+          Invite friends <br /> and get more ASO
         </h1>
         <div className="grow mb-[70px] relative flex flex-col items-center">
           <Image className="mr-1 mt-5" src={logo} width={150} height={150} />
