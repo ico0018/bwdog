@@ -9,7 +9,7 @@ import { miniapp_init } from "../../core/tg/index";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Backdrop, CircularProgress } from "@mui/material";
-
+import toast, { Toaster } from 'react-hot-toast';
 import {
   api_login,
   api_login_data,
@@ -39,7 +39,7 @@ export default function Index() {
       text: "Join and see more details",
       button: "Join",
       link: "https://t.me/ASOWEIKE",
-      action: "twitterFollow",
+      action: "mainTelegramChannelJoin",
       status: 0,
     },
     {
@@ -47,7 +47,7 @@ export default function Index() {
       text: "Follow to earn ! ",
       button: "Follow",
       link: "https://x.com/gunmuho1",
-      action: "mainTelegramChannelJoin",
+      action: "twitterFollow",
       status: 0,
     },
   ]);
@@ -87,7 +87,7 @@ export default function Index() {
 
           // if(e.status || e.status==0)
           // {
-          cardsFinal[i].button = actionStatus[0];
+          cardsFinal[i].button = actionStatus[e.status] ? actionStatus[e.status] : actionStatus[0];
           // }
         }
       }
@@ -145,29 +145,24 @@ export default function Index() {
     }
   }
 
-  // function MiniButton(title) {
-  //   return (
-  //     <>
-  //       <div
-  //         onClick={() => {
-  //           setSharePop(true);
-  //         }}
-  //         className="bg-white rounded-full text-black text-center w-fit font-extrabold p-2 mt-3 active:bg-gray-600 transition-all duration-75"
-  //       >
-  //         {title}
-  //       </div>
-  //     </>
-  //   );
-  // }
-
   async function CardButton(index, data) {
     await api_action_update({
       action: cardsData[index].action,
       status: cardsData[index].status + 1,
       data: "" ? data : "",
     });
-    window.open(cardsData[index].link);
-    telegramWebappInit();
+    if(cardsData[index].status ==1 )
+    {
+      toast(" 🌂Checking ...")
+    }
+    else if (cardsData[index].status ==2)
+    {
+      toast(" 🍟You have done this job")
+    }
+    else
+    {
+      window.open(cardsData[index].link);
+    }
   }
 
   const router = useNavigate();
@@ -184,6 +179,7 @@ export default function Index() {
 
   return (
     <>
+      <Toaster />
       {/* Loading Control */}
       <Backdrop
         open={loading}
@@ -210,7 +206,7 @@ export default function Index() {
           />
 
           <h1 className="text-4xl mt-5">{reqData.credit.credit || "838"}</h1>
-          <h2 className="text-xl text-gray-300 font-medium">COWS</h2>
+          <h2 className="text-xl text-gray-300 font-medium">ASO</h2>
 
           <Swiper
             style={{
@@ -249,7 +245,7 @@ export default function Index() {
                   />
                   <div className="flex flex-col">
                     <p>{item.title}</p>
-                    <p className="text-gray-300">+1,000 COWS</p>
+                    <p className="text-gray-300">+1,000 ASO</p>
                   </div>
                 </div>
                 <div
@@ -269,7 +265,7 @@ export default function Index() {
                 <Image className="mr-4" src={checked} width={35} height={35} />
                 <div className="flex flex-col">
                   <p>Join our channel</p>
-                  <p className="text-gray-300">+1,000 COWS</p>
+                  <p className="text-gray-300">+1,000 ASO</p>
                 </div>
               </div>
               <div
@@ -287,7 +283,7 @@ export default function Index() {
                 <Image className="mr-4" src={checked} width={35} height={35} />
                 <div className="flex flex-col">
                   <p>Follow us on Twitter</p>
-                  <p className="text-gray-300">+1000 COWS</p>
+                  <p className="text-gray-300">+1000 ASO</p>
                 </div>
               </div>
               <div

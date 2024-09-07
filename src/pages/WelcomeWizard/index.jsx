@@ -8,20 +8,7 @@ import { Image, Button } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 
-function Steps(props) {
-  const steps = [];
-  for (let i = 0; i < 5; i++) {
-    steps.push(
-      <div
-        key={i}
-        className={`w-12 h-1 mr-3 rounded-full last:mr-0 bg-[#83B6F0] ${
-          props.step === i ? "!bg-white" : ""
-        }`}
-      ></div>
-    );
-  }
-  return <div className="flex justify-center px-10">{steps}</div>;
-}
+
 
 export default function WelcomeWizard() {
   const navgator = useNavigate();
@@ -36,7 +23,7 @@ export default function WelcomeWizard() {
             Your sticker <br /> collection
           </>
         ),
-        desc: "Create your own sticker pack with unique Dogs",
+        desc: "You joined the telegraph.",
         img: demon1,
         btnTitle: "Wow, what",
       },
@@ -46,7 +33,7 @@ export default function WelcomeWizard() {
             Catch the <br /> rare stickers
           </>
         ),
-        desc: "Collect rare stickers in your pack before others do",
+        desc: "You were great. Here's your calf reward",
         img: demon2,
         btnTitle: "Oh!",
       },
@@ -56,45 +43,60 @@ export default function WelcomeWizard() {
             Mint and trade <br /> your stickers
           </>
         ),
-        desc: "Mint and trade your stickers on the NFT marketplace",
+        desc: " You can continue to participate in the airdrop of e-commerce interactive tokens at the Telegraph",
         img: demon3,
         btnTitle: "Yayyy",
       },
-      {
-        title: (
-          <>
-            Earn stickers that <br /> no one can buy
-          </>
-        ),
-        desc: "Donate to charities, join activities or just be real OG",
-        img: demon4,
-        btnTitle: "OMG I WANT IT!",
-      },
-      {
-        title: (
-          <>
-            You've got some
-            <br />
-            unique stickers
-            <br />
-            already
-          </>
-        ),
-        desc: "But no rush, the plantform is cooking so be ready to chaim it first",
-        img: demon5,
-        btnTitle: "Okaaay, will get back",
-      },
+      // {
+      //   title: (
+      //     <>
+      //       Earn stickers that <br /> no one can buy
+      //     </>
+      //   ),
+      //   desc: "Donate to charities, join activities or just be real OG",
+      //   img: demon4,
+      //   btnTitle: "OMG I WANT IT!",
+      // },
+      // {
+      //   title: (
+      //     <>
+      //       You've got some
+      //       <br />
+      //       unique stickers
+      //       <br />
+      //       already
+      //     </>
+      //   ),
+      //   desc: "But no rush, the plantform is cooking so be ready to chaim it first",
+      //   img: demon5,
+      //   btnTitle: "Okaaay, will get back",
+      // },
     ];
   }, []);
 
   function nextTip() {
-    if (step < 4) {
+    if (step < tipList.length-1) {
       setStep(step + 1);
     } else {
       navgator("/");
     }
   }
 
+
+  function Steps(props) {
+    const steps = [];
+    for (let i = 0; i < tipList.length; i++) {
+      steps.push(
+        <div
+          key={i}
+          className={`w-12 h-1 mr-3 rounded-full last:mr-0 bg-[#83B6F0] ${
+            props.step === i ? "!bg-white" : ""
+          }`}
+        ></div>
+      );
+    }
+    return <div className="flex justify-center px-10">{steps}</div>;
+  }
   return (
     <>
       <div className="bg-[#1E89D6]  h-full relative pt-8">

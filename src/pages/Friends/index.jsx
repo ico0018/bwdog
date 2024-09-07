@@ -12,6 +12,8 @@ import {
   storage_get_uid,
 } from "../../core/storage/index";
 
+import toast, { Toaster } from 'react-hot-toast';
+
 export default function Friends() {
 
   useEffect( () => {
@@ -41,13 +43,16 @@ export default function Friends() {
     transfer.focus();
     transfer.select();
     if (document.execCommand('copy')) { 
-      
+      toast("☀ Copy success ☀")
+    }else{
+      toast("⚠ Copy failed ⚠")
     }
     transfer.blur();
     document.body.removeChild(transfer);
   }
   return (
     <>
+      <Toaster />
       <div className="min-h-full bg-black text-white flex flex-col w-full px-4 pt-10">
         <h1 className="text-center text-3xl font-bold">
           Invite friends <br /> and get more ASO
