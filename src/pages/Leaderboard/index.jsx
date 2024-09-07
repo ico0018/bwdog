@@ -4,8 +4,8 @@ import checked from "../../assets/checked.png";
 import rank1 from "../../assets/rank1.svg";
 import rank2 from "../../assets/rank2.svg";
 import rank3 from "../../assets/rank3.svg";
-
-
+import { Backdrop, CircularProgress } from "@mui/material";
+import toast, { Toaster } from 'react-hot-toast';
 import {
   api_credit_list
 } from "../../core/request/index";
@@ -41,13 +41,25 @@ export default function Leaderboard() {
       const credit = (storage_get_user_tg_data())?.credit;
       setSelfData(credit)
       console.log("🔥 credit ",credit)
+
+      setLoading(false)
     })
   }, []);
   
-
+  const [loading, setLoading] = useState(true);
   
   return (
+
     <div className="min-h-full bg-black text-white flex flex-col w-full px-4 pt-10">
+
+    <Toaster />
+      <Backdrop
+        open={loading}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <h1 className="text-center text-3xl font-bold">Telegram Wall of Fame</h1>
 
       <div className="flex justify-between  mt-8 bg-[#1C1C1E] rounded-xl text-base p-3">

@@ -7,7 +7,7 @@ import copy from 'copy-to-clipboard'
 import {
   api_invite_count
 } from "../../core/request/index";
-
+import { Backdrop, CircularProgress } from "@mui/material";
 import {
   storage_get_uid,
 } from "../../core/storage/index";
@@ -22,6 +22,7 @@ export default function Friends() {
       setInvite(
         data.data.invite?data.data.invite:0
       )
+      setLoading(false)
     })
   }, []);
 
@@ -50,9 +51,17 @@ export default function Friends() {
     transfer.blur();
     document.body.removeChild(transfer);
   }
+
+  const [loading, setLoading] = useState(true);
   return (
     <>
       <Toaster />
+      <Backdrop
+        open={loading}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div className="min-h-full bg-black text-white flex flex-col w-full px-4 pt-10">
         <h1 className="text-center text-3xl font-bold">
           Invite friends <br /> and get more ASO

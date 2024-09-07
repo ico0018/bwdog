@@ -14,6 +14,7 @@ import {
   api_login,
   api_login_data,
   api_action_update,
+  api_action_active
 } from "../../core/request/index";
 import {
   storage_set_authkey,
@@ -32,7 +33,7 @@ export default function Index() {
    * mainTelegramChannelJoin
    */
 
-  const actionStatus = ["Check", "Done"];
+  const actionStatus = ["GO !","Check", "Done"];
   const [cardsData, setCardsData] = useState([
     {
       title: "Join our Channel",
@@ -41,6 +42,7 @@ export default function Index() {
       link: "https://t.me/ASOWEIKE",
       action: "mainTelegramChannelJoin",
       status: 0,
+      "credit":0
     },
     {
       title: "Follow our twitter",
@@ -49,6 +51,7 @@ export default function Index() {
       link: "https://x.com/gunmuho1",
       action: "twitterFollow",
       status: 0,
+      "credit":0
     },
   ]);
 
@@ -74,28 +77,34 @@ export default function Index() {
     console.log("isInited", isInited);
   }, []);
 
+
   function afterLogin(auth) {
     console.log("🔥 afterLogin", auth);
     storage_set_uid(auth?.uid);
     storage_set_user_tg_data(auth?.data);
     setReqData(auth.data);
-    var cardsFinal = JSON.parse(JSON.stringify(cardsData));
-    auth.data.action.forEach((e) => {
-      for (let i = 0; i < cardsFinal.length; i++) {
-        if (e.action == cardsFinal[i].action) {
-          cardsFinal[i].status = e.status;
 
-          // if(e.status || e.status==0)
-          // {
-          cardsFinal[i].button = actionStatus[e.status] ? actionStatus[e.status] : actionStatus[0];
-          // }
+    api_action_active().then((reqCardData) => {
+      //Got the active list
+      console.log("🔥 reqCardData", reqCardData);
+      var cardsFinal = reqCardData.data//JSON.parse(JSON.stringify(cardsData));
+      auth.data.action.forEach((e) => {
+        for (let i = 0; i < cardsFinal.length; i++) {
+          if (e.action == cardsFinal[i].action) {
+            cardsFinal[i].status = e.status;
+            cardsFinal[i].button = actionStatus[e.status] ? actionStatus[e.status] : actionStatus[0];
+          }
         }
-      }
+      });
+      setCardsData(cardsFinal);
+      setLoading(false);
+      console.log("🔥auth.data", auth.data);
+      console.log("🔥cardsFinal", cardsFinal);
+
+    })
+    .catch((error) => {
+      console.error("Error:", error);
     });
-    setCardsData(cardsFinal);
-    setLoading(false);
-    console.log("🔥auth.data", auth.data);
-    console.log("🔥cardsFinal", cardsFinal);
   }
   function telegramWebappInit() {
     if (isInited) {
@@ -245,7 +254,7 @@ export default function Index() {
                   />
                   <div className="flex flex-col">
                     <p>{item.title}</p>
-                    <p className="text-gray-300">+1,000 ASO</p>
+                    <p className="text-gray-300">+{item.credit} ASO</p>
                   </div>
                 </div>
                 <div

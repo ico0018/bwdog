@@ -14,6 +14,7 @@ const request_router = {
   action_list : request_baseurl + "action/list",
   invite_count : request_baseurl + "invite/count",
   credit_list: request_baseurl + "credit/list",
+  action_active: request_baseurl + "action/active",
 };
 
 async function requester(url, requestOptions) {
@@ -103,7 +104,12 @@ async function api_invite_count() {
 }
 
 async function api_credit_list() {
-  return await requester(request_router.credit_list, request_get_auth());
+  return await requester(request_router.credit_list, request_get_unauth());
 }
 
-export { api_auth, api_ping ,api_login,api_login_data,api_action_update,api_action_list,api_invite_count,api_credit_list};
+async function api_action_active() {
+  return await requester(request_router.action_active, request_get_auth());
+}
+
+
+export { api_auth, api_ping ,api_login,api_login_data,api_action_update,api_action_list,api_invite_count,api_credit_list,api_action_active};
