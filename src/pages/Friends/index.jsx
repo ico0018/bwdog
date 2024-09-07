@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Image } from "antd-mobile";
 import logo from "../../assets/cow.svg";
 import copy from "../../assets/copy.svg";
 import { telegramShare } from "../../core/tg/index";
 
+import {
+  api_invite_count
+} from "../../core/request/index";
+
+import {
+  storage_get_uid
+} from "../../core/storage/index";
+
 export default function Friends() {
+
+  useEffect( () => {
+    api_invite_count().then((data) => {
+      console.log("🔥 friend count",data,data.data.invite?invite.data.invite:0)
+      setInvite(
+        data.data.invite?invite.data.invite:0
+      )
+    })
+  }, []);
+
+  const [invite, setInvite] = useState(0)
+
   function shareToFriend() {
+    console.log("🍺 The to share uid :: ",storage_get_uid(),Number(storage_get_uid()).toString(16))
     telegramShare(
       "🍺 Earn your COWS here ! ",
-      "http://t.me/cowscoin_bot/app?startapp=invite1234"
+      `http://t.me/cowscoin_bot/app?startapp=i${Number(storage_get_uid()).toString(16)}`
     );
   }
   return (
@@ -26,7 +47,7 @@ export default function Friends() {
           <div className="w-full !absolute bottom-0">
             {/* Invited friends */}
             <p className="text-center text-sm mb-4">
-              Invited friends: <span className="font-bold">0</span>
+              Invited friends: <span className="font-bold">{invite}</span>
             </p>
             <div className="flex justify-between">
               <Button className="grow !rounded-lg" onClick={shareToFriend}>

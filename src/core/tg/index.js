@@ -55,8 +55,4 @@ function telegramShare(words, path) {
   window.location.href=encodeURI(`https://t.me/share/url?url=${path}&text=${words}`)
 }
 
-function telegramShareApp() {
-  telegramShare("url", "🍬 Use your multiChain assert here ! 🍬");
-}
-
-export { miniapp_init, tryCloseWebappWindows, telegramShareApp, telegramShare };
+export { miniapp_init, tryCloseWebappWindows, telegramShare };

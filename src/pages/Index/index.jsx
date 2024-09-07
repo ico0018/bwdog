@@ -18,6 +18,7 @@ import {
 import {
   storage_set_authkey,
   storage_get_authkey,
+  storage_set_uid
 } from "../../core/storage/index";
 
 export default function Index() {
@@ -72,6 +73,7 @@ export default function Index() {
 
   function afterLogin(auth) {
     console.log("🔥 afterLogin", auth);
+    storage_set_uid(auth?.uid);
     setReqData(auth.data);
     var cardsFinal = JSON.parse(JSON.stringify(cardsData));
     auth.data.action.forEach((e) => {
