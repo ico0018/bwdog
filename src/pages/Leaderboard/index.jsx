@@ -1,11 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Image } from "antd-mobile";
 import checked from "../../assets/checked.png";
 import rank1 from "../../assets/rank1.svg";
 import rank2 from "../../assets/rank2.svg";
 import rank3 from "../../assets/rank3.svg";
 
+
+import {
+  api_credit_list
+} from "../../core/request/index";
+
+import {
+  storage_get_uid,
+  storage_get_user_tg_data
+} from "../../core/storage/index";
+
 export default function Leaderboard() {
+
+  const [listData, setListData] = useState(
+    [
+      {
+        username:"NA",
+        credit:"0"
+      }
+    ]
+  )
+
+  const [selfData, setSelfData] = useState(
+    {
+      username:"NA",
+      credit:"0",
+      rank:0
+    }
+  )
+
+  useEffect( () => {
+    api_credit_list().then((data) => {
+      console.log("🔥 list ",data)
+      setListData(data.data)
+      const credit = (storage_get_user_tg_data())?.credit;
+      setSelfData(credit)
+      console.log("🔥 credit ",credit)
+    })
+  }, []);
+  
+
+  
   return (
     <div className="min-h-full bg-black text-white flex flex-col w-full px-4 pt-10">
       <h1 className="text-center text-3xl font-bold">Telegram Wall of Fame</h1>
@@ -14,17 +54,18 @@ export default function Leaderboard() {
         <div className="flex items-center">
           <Image className="mr-4" src={checked} width={40} height={40} />
           <div className="flex flex-col  font-bold">
-            <p>jackchanelx</p>
-            <p className="text-gray-300">0 COWS</p>
+            <p>{selfData.username}</p>
+            <p className="text-gray-300">{selfData.credit} ASO</p>
           </div>
         </div>
-        <div className="flex items-center font-bold">#84578392</div>
+        <div className="flex items-center font-bold">#{selfData.index}</div>
       </div>
 
-      <h2 className="text-xl font-bold mt-14">44.4M holders</h2>
+      <h2 className="text-xl font-bold mt-14">1M holders</h2>
 
       <div>
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+        
+        {listData.map((item, index) => (
           <div
             className="flex justify-between mt-2 rounded-xl text-base py-3"
             key={item}
@@ -32,8 +73,8 @@ export default function Leaderboard() {
             <div className="flex items-center">
               <Image className="mr-4" src={checked} width={40} height={40} />
               <div className="flex flex-col  font-bold">
-                <p>jackchanelx</p>
-                <p className="text-gray-300">0 COWS</p>
+                <p>{item.username}</p>
+                <p className="text-gray-300">{item.credit} ASO</p>
               </div>
             </div>
             <div className="flex items-center">

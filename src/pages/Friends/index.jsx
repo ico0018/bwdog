@@ -9,7 +9,7 @@ import {
 } from "../../core/request/index";
 
 import {
-  storage_get_uid
+  storage_get_uid,
 } from "../../core/storage/index";
 
 export default function Friends() {

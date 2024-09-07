@@ -19,6 +19,8 @@ import {
   storage_set_authkey,
   storage_get_authkey,
   storage_set_uid,
+  storage_set_user_tg_data,
+  storage_get_user_tg_data,
   storage_set_user_invite_code
 } from "../../core/storage/index";
 
@@ -75,6 +77,7 @@ export default function Index() {
   function afterLogin(auth) {
     console.log("🔥 afterLogin", auth);
     storage_set_uid(auth?.uid);
+    storage_set_user_tg_data(auth?.data);
     setReqData(auth.data);
     var cardsFinal = JSON.parse(JSON.stringify(cardsData));
     auth.data.action.forEach((e) => {
@@ -164,6 +167,7 @@ export default function Index() {
       data: "" ? data : "",
     });
     window.open(cardsData[index].link);
+    telegramWebappInit();
   }
 
   const router = useNavigate();
