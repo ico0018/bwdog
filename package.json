@@ -17,6 +17,7 @@
     "antd-mobile": "^5.37.1",
     "autoprefixer": "^10.4.20",
     "babel-preset-react-app": "^10.0.1",
+    "copy-to-clipboard": "^3.3.3",
     "gensync": "1.0.0-beta.2",
     "postcss": "^8.4.41",
     "react": "^18.3.1",

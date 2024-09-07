@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Image } from "antd-mobile";
 import logo from "../../assets/cow.svg";
-import copy from "../../assets/copy.svg";
+import copyIcon from "../../assets/copy.svg";
 import { telegramShare } from "../../core/tg/index";
-
+import copy from 'copy-to-clipboard'
 import {
   api_invite_count
 } from "../../core/request/index";
@@ -32,6 +32,20 @@ export default function Friends() {
       `http://t.me/cowscoin_bot/app?startapp=i${Number(storage_get_uid()).toString(16)}`
     );
   }
+  function clickToCopy()
+  {
+
+    let transfer = document.createElement('input');
+    document.body.appendChild(transfer);
+    transfer.value = `http://t.me/cowscoin_bot/app?startapp=i${Number(storage_get_uid()).toString(16)}`
+    transfer.focus();
+    transfer.select();
+    if (document.execCommand('copy')) { 
+      
+    }
+    transfer.blur();
+    document.body.removeChild(transfer);
+  }
   return (
     <>
       <div className="min-h-full bg-black text-white flex flex-col w-full px-4 pt-10">
@@ -55,9 +69,9 @@ export default function Friends() {
                   Invite friends
                 </span>
               </Button>
-              <Button className="!ml-3 !rounded-lg">
+              <Button className="!ml-3 !rounded-lg" onClick={clickToCopy}>
                 <div className="flex items-center">
-                  <Image src={copy} width={25} height={25} />
+                  <Image src={copyIcon} width={25} height={25} />
                 </div>
               </Button>
             </div>
