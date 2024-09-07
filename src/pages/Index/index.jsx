@@ -4,7 +4,7 @@ import logo from "../../assets/cow.svg";
 import wallet from "../../assets/wallet.png";
 import checked from "../../assets/checked.png";
 import { Button, Image, Popup, Swiper } from "antd-mobile";
-import { connect } from "../../core/wallet/tonconnectUI";
+import { address_readable, connect } from "../../core/wallet/tonconnectUI";
 import { miniapp_init } from "../../core/tg/index";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
@@ -71,6 +71,10 @@ export default function Index() {
 
   const [isInited, setIsInited] = useState(false);
 
+  const [isWalletConnect, setIsWalletConnect] = useState(false);
+
+  const [walletAdd, setWalletAdd] = useState("");
+
   useEffect(() => {
     console.log("useEffect");
     telegramWebappInit();
@@ -83,6 +87,13 @@ export default function Index() {
     storage_set_uid(auth?.uid);
     storage_set_user_tg_data(auth?.data);
     setReqData(auth.data);
+
+    if(auth.data.wallet && auth.data.wallet && auth.data.wallet.length > 1 )
+    {
+      const finaladd = address_readable(4,4,auth.data.wallet)
+      console.log("🔥 finaladd",finaladd)
+      setWalletAdd(finaladd)
+    }
 
     api_action_active().then((reqCardData) => {
       //Got the active list
@@ -182,10 +193,13 @@ export default function Index() {
 
   // Loading Control
   const [loading, setLoading] = useState(true);
-  // setTimeout(() => {
-  //   setLoading(false);
-  // }, 1000);
 
+  function walletControl()
+  {
+    toast(
+      address_readable(6,6,storage_get_user_tg_data().wallet)
+    )
+  }
   return (
     <>
       <Toaster />
@@ -199,13 +213,25 @@ export default function Index() {
       <div className="bg-black min-h-full text-white px-4">
         <Navigator></Navigator>
         <div className="body flex flex-col items-center">
-          <Button className="!mt-6" onClick={connect}>
-            <div className="flex items-center">
-              <Image className="mr-1" src={wallet} width={20} height={20} />
-              Connect wallet
-            </div>
-          </Button>
 
+
+          
+
+
+                    {isWalletConnect ?
+                    <Button className="!mt-6" onClick={connect}>
+                      <div className="flex items-center">
+                        <Image className="mr-1" src={wallet} width={20} height={20} />
+                        Connect wallet
+                      </div>
+                    </Button> : 
+                    <Button className="!mt-6" onClick={walletControl}>
+                    <div className="flex items-center">
+                      <Image className="mr-1" src={wallet} width={20} height={20} />
+                      {walletAdd}
+                    </div>
+                  </Button>
+                  }
           <Image
             onClick={toWelcome}
             className="mr-1 mt-5"
