@@ -18,7 +18,8 @@ import {
 import {
   storage_set_authkey,
   storage_get_authkey,
-  storage_set_uid
+  storage_set_uid,
+  storage_set_user_invite_code
 } from "../../core/storage/index";
 
 export default function Index() {
@@ -103,6 +104,7 @@ export default function Index() {
 
     let autKey = storage_get_authkey();
     if (autKey && autKey.length > 10) {
+      //🍺Check login status . if it do already have the auth key
       console.log("🔥autKey exsit", autKey);
       api_login_data()
         .then((auth) => {
@@ -112,20 +114,25 @@ export default function Index() {
           console.error("Error:", error);
         });
     } else {
+      //🍺First time to get the init interface .
       const initData = miniapp_init();
       console.log("🔥initData", initData);
+      let inviteCode = "";
+      if(initData.starData&&initData.starData.length>1)
+      {
+        if(initData.starData[0]=='i')
+        {
+          inviteCode =  initData.starData
+          inviteCode = inviteCode.substring(1,inviteCode.length);
+        }
+      }
+      console.log("⚠ Invite code check : ",inviteCode,initData.starData)
       api_login({
         initData: initData.initData.initData.split("&tgWebAppVersion")[0] || "",
         invite: initData.starData,
+        invite:inviteCode
       })
         .then((auth) => {
-          // if (auth.code != 200 || !auth.data) {
-          //   storage_set_authkey("");
-          //   return telegramWebappInit();
-          // }
-          // setLoading(false);
-          // console.log("🔥", auth);
-          // setReqData(auth.data);
           storage_set_authkey(auth.token);
           afterLogin(auth);
         })

@@ -13,7 +13,7 @@ const router_storage = {
     hasStarData: false,
     starData: "",
   },
-  kp: "",
+  invite:""
 };
 
 function storage_get_authkey() {
@@ -64,6 +64,18 @@ function storage_set_user_tg_data(uid) {
   router_storage.user_data_tg = uid;
 }
 
+function storage_get_user_invite_code() {
+  const key = router_storage.user_data_tg;
+  if (key) {
+    return key;
+  }
+  return false;
+}
+
+function storage_set_user_invite_code(code) {
+  router_storage.invite = code;
+}
+
 export {
   storage_get_authkey,
   storage_set_authkey,
@@ -73,4 +85,6 @@ export {
   storage_get_raw_init_data,
   storage_set_raw_init_data,
   storage_set_user_tg_data,
+  storage_get_user_invite_code,
+  storage_set_user_invite_code
 };

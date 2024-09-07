@@ -16,9 +16,9 @@ export default function Friends() {
 
   useEffect( () => {
     api_invite_count().then((data) => {
-      console.log("🔥 friend count",data,data.data.invite?invite.data.invite:0)
+      console.log("🔥 friend count",data,data.data.invite?data.data.invite:0)
       setInvite(
-        data.data.invite?invite.data.invite:0
+        data.data.invite?data.data.invite:0
       )
     })
   }, []);
