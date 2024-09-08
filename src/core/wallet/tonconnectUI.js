@@ -82,4 +82,34 @@ async function disconnectWallet() {
   window.location.reload();
 }
 
-export { connect ,address_readable  ,disconnectWallet};
+
+async function reconnect() {
+  try {
+    if (tonConnectUI.connected) {
+      console.log("Disconnect for connection reload");
+      await tonConnectUI.disconnect();
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
+  try {
+    await tonConnectUI.openModal();
+
+    tonConnectUI.onStatusChange(async (walletAndwalletInfo) => {
+      console.log("walletAndwalletInfo : ", walletAndwalletInfo.account.address);
+      await api.api_wallet_connect(
+        {
+          address : walletAndwalletInfo.account.address
+        }
+      )
+      window.location.reload();
+      
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+
+export { connect ,address_readable  ,disconnectWallet,reconnect};

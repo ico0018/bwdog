@@ -4,7 +4,7 @@ import logo from "../../assets/cow.svg";
 import wallet from "../../assets/wallet.png";
 import checked from "../../assets/checked.png";
 import { Button, Image, Popup, Swiper } from "antd-mobile";
-import { address_readable, connect , disconnectWallet } from "../../core/wallet/tonconnectUI";
+import { address_readable, connect , reconnect } from "../../core/wallet/tonconnectUI";
 import { miniapp_init } from "../../core/tg/index";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
@@ -377,9 +377,9 @@ export default function Index() {
                   {walletAdd}
                 </span>
               </Button>
-              <Button className="w-full !rounded-xl" onClick={disconnectWallet}>
+              <Button className="w-full !rounded-xl" onClick={reconnect}>
                 <span className="flex items-center justify-center font-bold text-lg py-1">
-                  Disconnect Wallet
+                  Change Wallet
                 </span>
               </Button>
             </div>
