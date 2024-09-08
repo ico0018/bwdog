@@ -273,6 +273,11 @@ export default function Index() {
             style={{
               "--track-padding": " 0 0 16px",
             }}
+            loop={true}
+            autoplay={{
+                delay: 2000,
+                disableOnInteraction: false
+            }}
           >
             {cardsData.map((item, index) => (
               <Swiper.Item key={index}>
