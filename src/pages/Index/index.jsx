@@ -9,6 +9,7 @@ import { miniapp_init } from "../../core/tg/index";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Backdrop, CircularProgress } from "@mui/material";
+import DoneIcon from "@mui/icons-material/Done";
 import toast, { Toaster } from 'react-hot-toast';
 import {
   api_login,
@@ -33,7 +34,7 @@ export default function Index() {
    * mainTelegramChannelJoin
    */
 
-  const actionStatus = ["GO !","Check", "Done"];
+  const actionStatus = ["GO !","Check", <DoneIcon></DoneIcon>];
   const [cardsData, setCardsData] = useState([
     {
       title: "Join our Channel",
@@ -105,7 +106,11 @@ export default function Index() {
         for (let i = 0; i < cardsFinal.length; i++) {
           if (e.action == cardsFinal[i].action) {
             cardsFinal[i].status = e.status;
-            cardsFinal[i].button = actionStatus[e.status] ? actionStatus[e.status] : actionStatus[0];
+            if(e.status != 0 )
+            {
+              cardsFinal[i].button = actionStatus[e.status] ? actionStatus[e.status] : actionStatus[0];
+            }
+            
           }
         }
       });
@@ -168,12 +173,18 @@ export default function Index() {
   }
 
   async function CardButton(index, data) {
-    await api_action_update({
+
+    console.log("🐞 api_action_update" ,{
+      action: cardsData[index].action,
+      status: cardsData[index].status + 1,
+      data: "" ? data : "",
+    } )
+    const update = await api_action_update({
       action: cardsData[index].action,
       status: cardsData[index].status + 1,
       data: "" ? data : "",
     });
-
+    console.log("🐞 Update result" ,update)
     window.open(cardsData[index].link);
 
     if(cardsData[index].status ==1 )
@@ -189,7 +200,13 @@ export default function Index() {
     {
       
     }
-    window.location.reload()
+
+    setTimeout(
+      function(){
+        window.location.reload()
+      },10000
+  );
+
   }
 
   const router = useNavigate();
@@ -262,6 +279,7 @@ export default function Index() {
                 <div className=" mt-5 bg-gray-800 rounded-xl p-5 text-sm w-[98%]">
                   <p className="text-xl  font-bold">{item.title}</p>
                   <p>{item.text}</p>
+                  
                   <div
                     onClick={() => {
                       window.open(item.link);
