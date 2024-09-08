@@ -4,7 +4,7 @@ import logo from "../../assets/cow.svg";
 import wallet from "../../assets/wallet.png";
 import checked from "../../assets/checked.png";
 import { Button, Image, Popup, Swiper } from "antd-mobile";
-import { address_readable, connect } from "../../core/wallet/tonconnectUI";
+import { address_readable, connect , disconnectWallet } from "../../core/wallet/tonconnectUI";
 import { miniapp_init } from "../../core/tg/index";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
@@ -55,7 +55,7 @@ export default function Index() {
     },
   ]);
 
-  const [sharePop, setSharePop] = useState(false);
+  const [walletPop, setWalletPop] = useState(false);
 
   const [reqData, setReqData] = useState({
     wallet: {},
@@ -88,11 +88,13 @@ export default function Index() {
     storage_set_user_tg_data(auth?.data);
     setReqData(auth.data);
 
-    if(auth.data.wallet && auth.data.wallet && auth.data.wallet.length > 1 )
+    console.log("🔥 auth.data.wallet && auth.data.wallet.length > 1",auth.data.wallet && auth.data.wallet.length > 1)
+    if(auth.data.wallet && auth.data.wallet.length > 1 )
     {
       const finaladd = address_readable(4,4,auth.data.wallet)
       console.log("🔥 finaladd",finaladd)
       setWalletAdd(finaladd)
+      setIsWalletConnect(true)
     }
 
     api_action_active().then((reqCardData) => {
@@ -171,6 +173,9 @@ export default function Index() {
       status: cardsData[index].status + 1,
       data: "" ? data : "",
     });
+
+    window.open(cardsData[index].link);
+
     if(cardsData[index].status ==1 )
     {
       toast(" 🌂Checking ...")
@@ -178,11 +183,13 @@ export default function Index() {
     else if (cardsData[index].status ==2)
     {
       toast(" 🍟You have done this job")
+      return true;
     }
     else
     {
-      window.open(cardsData[index].link);
+      
     }
+    window.location.reload()
   }
 
   const router = useNavigate();
@@ -199,7 +206,9 @@ export default function Index() {
     toast(
       address_readable(6,6,storage_get_user_tg_data().wallet)
     )
+    setWalletPop(true);
   }
+
   return (
     <>
       <Toaster />
@@ -219,18 +228,18 @@ export default function Index() {
 
 
                     {isWalletConnect ?
-                    <Button className="!mt-6" onClick={connect}>
-                      <div className="flex items-center">
-                        <Image className="mr-1" src={wallet} width={20} height={20} />
-                        Connect wallet
-                      </div>
-                    </Button> : 
                     <Button className="!mt-6" onClick={walletControl}>
                     <div className="flex items-center">
                       <Image className="mr-1" src={wallet} width={20} height={20} />
                       {walletAdd}
                     </div>
-                  </Button>
+                  </Button>:
+                    <Button className="!mt-6" onClick={connect}>
+                      <div className="flex items-center">
+                        <Image className="mr-1" src={wallet} width={20} height={20} />
+                        Connect wallet
+                      </div>
+                    </Button>
                   }
           <Image
             onClick={toWelcome}
@@ -334,9 +343,9 @@ export default function Index() {
           </div>
         </div>
         <Popup
-          visible={sharePop}
+          visible={walletPop}
           onMaskClick={() => {
-            setSharePop(false);
+            setWalletPop(false);
           }}
           bodyStyle={{
             background: "#131313",
@@ -346,11 +355,11 @@ export default function Index() {
         >
           <div className="flex flex-col items-center text-white min-h-[235px]">
             <h1 className="flex justify-center items-center relative p-4 text-lg font-medium w-full border-b-[0.5px] border-gray-700">
-              <p>Invite friends</p>
+              <p>My Wallet</p>
               <div
                 className="!absolute right-4 bg-[#222222] rounded-full w-8 h-8 flex justify-center items-center"
                 onClick={() => {
-                  setSharePop(false);
+                  setWalletPop(false);
                 }}
                 shape="rounded"
               >
@@ -365,12 +374,12 @@ export default function Index() {
             <div className="flex flex-col w-full grow justify-between px-4 py-7">
               <Button className="w-full !rounded-xl">
                 <span className="flex items-center justify-center font-bold text-lg py-1">
-                  Copy invite link
+                  {walletAdd}
                 </span>
               </Button>
-              <Button className="w-full !rounded-xl">
+              <Button className="w-full !rounded-xl" onClick={disconnectWallet}>
                 <span className="flex items-center justify-center font-bold text-lg py-1">
-                  Share invite link
+                  Disconnect Wallet
                 </span>
               </Button>
             </div>

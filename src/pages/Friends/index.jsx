@@ -4,6 +4,9 @@ import logo from "../../assets/cow.svg";
 import copyIcon from "../../assets/copy.svg";
 import { telegramShare } from "../../core/tg/index";
 import copy from 'copy-to-clipboard'
+
+import GroupsIcon from "@mui/icons-material/Groups";
+
 import {
   api_invite_count
 } from "../../core/request/index";
@@ -75,7 +78,8 @@ export default function Friends() {
           <div className="w-full !absolute bottom-0">
             {/* Invited friends */}
             <p className="text-center text-sm mb-4">
-              Invited friends: <span className="font-bold">{invite}</span>
+              Invited friends: <span className="font-bold">{invite}  
+              <GroupsIcon/></span>
             </p>
             <div className="flex justify-between">
               <Button className="grow !rounded-lg" onClick={shareToFriend}>

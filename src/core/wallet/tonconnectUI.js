@@ -73,4 +73,13 @@ function address_readable(font,back,raw)
 }
 
 
-export { connect ,address_readable  };
+async function disconnectWallet() {
+  await api.api_wallet_connect(
+    {
+      address : ""
+    }
+  )
+  window.location.reload();
+}
+
+export { connect ,address_readable  ,disconnectWallet};
