@@ -7,7 +7,7 @@ import rank3 from "../../assets/rank3.svg";
 import { Backdrop, CircularProgress } from "@mui/material";
 import toast, { Toaster } from 'react-hot-toast';
 import {
-  api_credit_list
+  api_credit_list, api_holder_count
 } from "../../core/request/index";
 
 import {
@@ -17,6 +17,7 @@ import {
 
 export default function Leaderboard() {
 
+  const [holder, setHolder] = useState(1521)
   const [listData, setListData] = useState(
     [
       {
@@ -42,6 +43,15 @@ export default function Leaderboard() {
       setSelfData(credit)
       console.log("🔥 credit ",credit)
 
+      //Set the holders 
+      // setHolder
+      api_holder_count().then((d) => {
+        console.log("holder count ",d)
+        if(d.code == 200 )
+        {
+          setHolder(d.data)
+        }
+      })
       setLoading(false)
     })
   }, []);
@@ -73,7 +83,7 @@ export default function Leaderboard() {
         <div className="flex items-center font-bold">#{selfData.index}</div>
       </div>
 
-      <h2 className="text-xl font-bold mt-14">1M holders</h2>
+      <h2 className="text-xl font-bold mt-14">{holder} holders</h2>
 
       <div>
         

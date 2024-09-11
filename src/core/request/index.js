@@ -15,7 +15,8 @@ const request_router = {
   invite_count : request_baseurl + "invite/count",
   credit_list: request_baseurl + "credit/list",
   action_active: request_baseurl + "action/active",
-  wallet_connect: request_baseurl +"/wallet/connect"
+  wallet_connect: request_baseurl +"/wallet/connect",
+  holder_count: request_baseurl +"/user/count",
 };
 
 async function requester(url, requestOptions) {
@@ -108,6 +109,10 @@ async function api_credit_list() {
   return await requester(request_router.credit_list, request_get_unauth());
 }
 
+async function api_holder_count() {
+  return await requester(request_router.holder_count, request_get_unauth());
+}
+
 async function api_action_active() {
   return await requester(request_router.action_active, request_get_auth());
 }
@@ -118,4 +123,4 @@ async function api_wallet_connect(data) {
 
 
 
-export { api_auth, api_ping ,api_login,api_login_data,api_action_update,api_action_list,api_invite_count,api_credit_list,api_action_active , api_wallet_connect};
+export { api_auth, api_ping ,api_login,api_login_data,api_action_update,api_action_list,api_invite_count,api_credit_list,api_action_active , api_wallet_connect,api_holder_count};
