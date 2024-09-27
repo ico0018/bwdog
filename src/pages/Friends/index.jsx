@@ -21,7 +21,7 @@ export default function Friends() {
 
   useEffect( () => {
     api_invite_count().then((data) => {
-      console.log("🔥 friend count",data,data.data.invite?data.data.invite:0)
+      // console.log("🔥 friend count",data,data.data.invite?data.data.invite:0)
       setInvite(
         data.data.invite?data.data.invite:0
       )
@@ -32,7 +32,7 @@ export default function Friends() {
   const [invite, setInvite] = useState(0)
 
   function shareToFriend() {
-    console.log("🍺 The to share uid :: ",storage_get_uid(),Number(storage_get_uid()).toString(16))
+    // console.log("🍺 The to share uid :: ",storage_get_uid(),Number(storage_get_uid()).toString(16))
     telegramShare(
       "🍺 Earn your COWS here ! ",
       `http://t.me/cowscoin_bot/app?startapp=i${Number(storage_get_uid()).toString(16)}`

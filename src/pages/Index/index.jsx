@@ -79,30 +79,30 @@ export default function Index() {
   const [walletAdd, setWalletAdd] = useState("");
 
   useEffect(() => {
-    console.log("useEffect");
+    // console.log("useEffect");
     telegramWebappInit();
-    console.log("isInited", isInited);
+    // console.log("isInited", isInited);
   }, []);
 
 
   function afterLogin(auth) {
-    console.log("🔥 afterLogin", auth);
+    // console.log("🔥 afterLogin", auth);
     storage_set_uid(auth?.uid);
     storage_set_user_tg_data(auth?.data);
     setReqData(auth.data);
 
-    console.log("🔥 auth.data.wallet && auth.data.wallet.length > 1",auth.data.wallet && auth.data.wallet.length > 1)
+    // console.log("🔥 auth.data.wallet && auth.data.wallet.length > 1",auth.data.wallet && auth.data.wallet.length > 1)
     if(auth.data.wallet && auth.data.wallet.length > 1 )
     {
       const finaladd = address_readable(4,4,auth.data.wallet)
-      console.log("🔥 finaladd",finaladd)
+      // console.log("🔥 finaladd",finaladd)
       setWalletAdd(finaladd)
       setIsWalletConnect(true)
     }
 
     api_action_active().then((reqCardData) => {
       //Got the active list
-      console.log("🔥 reqCardData", reqCardData);
+      // console.log("🔥 reqCardData", reqCardData);
       var cardsFinal = reqCardData.data//JSON.parse(JSON.stringify(cardsData));
       auth.data.action.forEach((e) => {
         for (let i = 0; i < cardsFinal.length; i++) {
@@ -118,8 +118,8 @@ export default function Index() {
       });
       setCardsData(cardsFinal);
       setLoading(false);
-      console.log("🔥auth.data", auth.data);
-      console.log("🔥cardsFinal", cardsFinal);
+      // console.log("🔥auth.data", auth.data);
+      // console.log("🔥cardsFinal", cardsFinal);
 
     })
     .catch((error) => {
@@ -128,7 +128,7 @@ export default function Index() {
   }
   function telegramWebappInit() {
     if (isInited) {
-      console.log("Looping again . find reason plz . ");
+      // console.log("Looping again . find reason plz . ");
       return false;
     } else {
       setIsInited(true);
@@ -137,7 +137,7 @@ export default function Index() {
     let autKey = storage_get_authkey();
     if (autKey && autKey.length > 10) {
       //🍺Check login status . if it do already have the auth key
-      console.log("🔥autKey exsit", autKey);
+      // console.log("🔥autKey exsit", autKey);
       api_login_data()
         .then((auth) => {
           afterLogin(auth);
@@ -148,7 +148,7 @@ export default function Index() {
     } else {
       //🍺First time to get the init interface .
       const initData = miniapp_init();
-      console.log("🔥initData", initData);
+      // console.log("🔥initData", initData);
       let inviteCode = "";
       if(initData.starData&&initData.starData.length>1)
       {
@@ -158,7 +158,7 @@ export default function Index() {
           inviteCode = inviteCode.substring(1,inviteCode.length);
         }
       }
-      console.log("⚠ Invite code check : ",inviteCode,initData.starData)
+      // console.log("⚠ Invite code check : ",inviteCode,initData.starData)
       api_login({
         initData: initData.initData.initData.split("&tgWebAppVersion")[0] || "",
         invite: initData.starData,
@@ -176,17 +176,17 @@ export default function Index() {
 
   async function CardButton(index, data) {
 
-    console.log("🐞 api_action_update" ,{
-      action: cardsData[index].action,
-      status: cardsData[index].status + 1,
-      data: "" ? data : "",
-    } )
+    // console.log("🐞 api_action_update" ,{
+    //   action: cardsData[index].action,
+    //   status: cardsData[index].status + 1,
+    //   data: "" ? data : "",
+    // } )
     const update = await api_action_update({
       action: cardsData[index].action,
       status: cardsData[index].status + 1,
       data: "" ? data : "",
     });
-    console.log("🐞 Update result" ,update)
+    // console.log("🐞 Update result" ,update)
     window.open(cardsData[index].link);
 
     if(cardsData[index].status ==1 )

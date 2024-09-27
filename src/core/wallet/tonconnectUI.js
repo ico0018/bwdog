@@ -9,7 +9,7 @@ let tonConnectUI;
 async function connect() {
   try {
     if (!tonConnectUI) {
-      console.log("🚧 INIT the tonconnect ", tonConnectUI);
+      // console.log("🚧 INIT the tonconnect ", tonConnectUI);
       var manifest =
         "https://api.tonmeme.xyz/manifest/aso.json";
       tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
@@ -22,10 +22,10 @@ async function connect() {
   } catch (e) {
     console.error(e);
   }
-  console.log("tonConnectUI.connected :: @2.0.0", tonConnectUI.connected);
+  // console.log("tonConnectUI.connected :: @2.0.0", tonConnectUI.connected);
   try {
     if (tonConnectUI.connected) {
-      console.log("Disconnect for connection reload");
+      // console.log("Disconnect for connection reload");
       await tonConnectUI.disconnect();
     }
   } catch (e) {
@@ -36,7 +36,7 @@ async function connect() {
     await tonConnectUI.openModal();
 
     tonConnectUI.onStatusChange(async (walletAndwalletInfo) => {
-      console.log("walletAndwalletInfo : ", walletAndwalletInfo.account.address);
+      // console.log("walletAndwalletInfo : ", walletAndwalletInfo.account.address);
       await api.api_wallet_connect(
         {
           address : walletAndwalletInfo.account.address
@@ -86,7 +86,7 @@ async function disconnectWallet() {
 async function reconnect() {
   try {
     if (tonConnectUI.connected) {
-      console.log("Disconnect for connection reload");
+      // console.log("Disconnect for connection reload");
       await tonConnectUI.disconnect();
     }
   } catch (e) {
@@ -97,7 +97,7 @@ async function reconnect() {
     await tonConnectUI.openModal();
 
     tonConnectUI.onStatusChange(async (walletAndwalletInfo) => {
-      console.log("walletAndwalletInfo : ", walletAndwalletInfo.account.address);
+      // console.log("walletAndwalletInfo : ", walletAndwalletInfo.account.address);
       await api.api_wallet_connect(
         {
           address : walletAndwalletInfo.account.address

@@ -23,7 +23,7 @@ async function requester(url, requestOptions) {
   try {
     return (await fetch(url, requestOptions)).json();
   } catch (e) {
-    console.log("🐞 req error", e);
+    // console.log("🐞 req error", e);
   }
   return false;
 }

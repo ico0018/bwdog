@@ -36,7 +36,7 @@ function miniapp_init() {
       }
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
   storage_set_raw_init_data(decodeData)
   return decodeData;

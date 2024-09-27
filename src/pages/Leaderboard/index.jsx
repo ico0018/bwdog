@@ -37,16 +37,16 @@ export default function Leaderboard() {
 
   useEffect( () => {
     api_credit_list().then((data) => {
-      console.log("🔥 list ",data)
+      // console.log("🔥 list ",data)
       setListData(data.data)
       const credit = (storage_get_user_tg_data())?.credit;
       setSelfData(credit)
-      console.log("🔥 credit ",credit)
+      // console.log("🔥 credit ",credit)
 
       //Set the holders 
       // setHolder
       api_holder_count().then((d) => {
-        console.log("holder count ",d)
+        // console.log("holder count ",d)
         if(d.code == 200 )
         {
           setHolder(d.data)
