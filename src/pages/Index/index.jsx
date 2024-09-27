@@ -41,6 +41,7 @@ export default function Index() {
       text: "Join and see more details",
       button: "Join",
       link: "https://t.me/ASOWEIKE",
+      "logo":"https://resource.tonmeme.xyz/logos/tg.png",
       action: "mainTelegramChannelJoin",
       status: 0,
       "credit":0
@@ -50,6 +51,7 @@ export default function Index() {
       text: "Follow to earn ! ",
       button: "Follow",
       link: "https://x.com/gunmuho1",
+      "logo":"https://resource.tonmeme.xyz/logos/x.png",
       action: "twitterFollow",
       status: 0,
       "credit":0
@@ -306,7 +308,7 @@ export default function Index() {
                 <div className="flex items-center">
                   <Image
                     className="mr-4"
-                    src={checked}
+                    src={item.logo}
                     width={35}
                     height={35}
                   />
