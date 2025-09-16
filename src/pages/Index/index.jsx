@@ -127,52 +127,68 @@ export default function Index() {
     });
   }
   function telegramWebappInit() {
-    if (isInited) {
-      // console.log("Looping again . find reason plz . ");
-      return false;
-    } else {
-      setIsInited(true);
+  if (isInited) {
+    return false;
+  } else {
+    setIsInited(true);
+  }
+
+  let autKey = storage_get_authkey();
+  if (autKey && autKey.length > 10) {
+    // 已有 auth key → 直接登录
+    api_login_data()
+      .then((auth) => {
+        afterLogin(auth);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  } else {
+    // 第一次初始化
+    const initData = miniapp_init();
+    console.log("🔥 initData", initData);
+
+    let inviteCode = "";
+    if (initData.starData && initData.starData.length > 1) {
+      if (initData.starData[0] === "i") {
+        inviteCode = initData.starData.substring(1);
+      }
     }
 
-    let autKey = storage_get_authkey();
-    if (autKey && autKey.length > 10) {
-      //🍺Check login status . if it do already have the auth key
-      // console.log("🔥autKey exsit", autKey);
-      api_login_data()
-        .then((auth) => {
-          afterLogin(auth);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+    // ✅ 安全获取 rawInitData
+    let rawInitData = "";
+    if (initData.initData && initData.initData.initData) {
+      rawInitData = initData.initData.initData.split("&tgWebAppVersion")[0];
     } else {
-      //🍺First time to get the init interface .
-      const initData = miniapp_init();
-      // console.log("🔥initData", initData);
-      let inviteCode = "";
-      if(initData.starData&&initData.starData.length>1)
-      {
-        if(initData.starData[0]=='i')
-        {
-          inviteCode =  initData.starData
-          inviteCode = inviteCode.substring(1,inviteCode.length);
+      // 从环境变量里取 mock 数据
+      const envData = process.env.REACT_APP_TG_WEBAPPDATA;
+      if (envData) {
+        try {
+          const parsed = JSON.parse(envData);
+          rawInitData =
+            typeof parsed === "string"
+              ? parsed
+              : JSON.stringify(parsed); // 保证是字符串
+          console.log("⚠️ 使用环境变量 mock initData");
+        } catch (e) {
+          console.error("解析 REACT_APP_TG_WEBAPPDATA 出错:", e);
         }
       }
-      // console.log("⚠ Invite code check : ",inviteCode,initData.starData)
-      api_login({
-        initData: initData.initData.initData.split("&tgWebAppVersion")[0] || "",
-        invite: initData.starData,
-        invite:inviteCode
-      })
-        .then((auth) => {
-          storage_set_authkey(auth.token);
-          afterLogin(auth);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
     }
+
+    api_login({
+      initData: rawInitData || "",
+      invite: inviteCode,
+    })
+      .then((auth) => {
+        storage_set_authkey(auth.token);
+        afterLogin(auth);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
+}
 
   async function CardButton(index, data) {
 
@@ -268,7 +284,7 @@ export default function Index() {
             height={150}
           />
 
-          <h1 className="text-4xl mt-5">{reqData.credit.credit || "838"}</h1>
+          <h1 className="text-4xl mt-5">{reqData?.credit?.credit ?? "838"}</h1>
           <h2 className="text-xl text-gray-300 font-medium">ASO</h2>
 
           <Swiper
@@ -314,7 +330,7 @@ export default function Index() {
                   />
                   <div className="flex flex-col">
                     <p>{item.title}</p>
-                    <p className="text-gray-300">+{item.credit} ASO</p>
+                    <p className="text-gray-300">+{item?.credit ?? 0} ASO</p>
                   </div>
                 </div>
                 <div

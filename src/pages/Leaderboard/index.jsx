@@ -35,26 +35,32 @@ export default function Leaderboard() {
     }
   )
 
-  useEffect( () => {
-    api_credit_list().then((data) => {
-      // console.log("🔥 list ",data)
-      setListData(data.data)
-      const credit = (storage_get_user_tg_data())?.credit;
-      setSelfData(credit)
-      // console.log("🔥 credit ",credit)
+useEffect(() => {
+  api_credit_list()
+    .then((data) => {
+      setListData(data.data);
 
-      //Set the holders 
-      // setHolder
+      const credit = (storage_get_user_tg_data())?.credit ?? 0;
+      const username = (storage_get_user_tg_data())?.username ?? "NA";
+
+      setSelfData({
+        username,
+        credit,
+        rank: 0,
+      });
+
       api_holder_count().then((d) => {
-        // console.log("holder count ",d)
-        if(d.code == 200 )
-        {
-          setHolder(d.data)
+        if (d.code === 200) {
+          setHolder(d.data);
         }
-      })
-      setLoading(false)
+      });
+
+      setLoading(false);
     })
-  }, []);
+    .catch((err) => {
+      console.error("❌ 获取排行榜失败:", err);
+    });
+}, []);
   
   const [loading, setLoading] = useState(true);
   
@@ -77,7 +83,7 @@ export default function Leaderboard() {
           <Image className="mr-4" src={checked} width={40} height={40} />
           <div className="flex flex-col  font-bold">
             <p>{selfData.username}</p>
-            <p className="text-gray-300">{selfData.credit} ASO</p>
+            <p className="text-gray-300">{selfData?.credit ?? 0} ASO</p>
           </div>
         </div>
         <div className="flex items-center font-bold">#{selfData.index}</div>
@@ -96,7 +102,7 @@ export default function Leaderboard() {
               <Image className="mr-4" src={checked} width={40} height={40} />
               <div className="flex flex-col  font-bold">
                 <p>{item.username}</p>
-                <p className="text-gray-300">{item.credit} ASO</p>
+                <p className="text-gray-300">{item?.credit ?? 0} ASO</p>
               </div>
             </div>
             <div className="flex items-center">
